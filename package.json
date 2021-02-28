@@ -1,5 +1,5 @@
 {
-  "name": "tweetnacl",
+  "name": "@openpgp/tweetnacl",
   "version": "1.0.3",
   "description": "Port of TweetNaCl cryptographic library to JavaScript",
   "main": "nacl-fast.js",
