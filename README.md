@@ -1,6 +1,11 @@
 TweetNaCl.js
 ============
 
+> This fork drops the functions that are not needed for OpenPGP.js, resulting in a lighter `nacl-fast.js` file.
+We recommend you use the upstream repo. The rest of the README refers to the upstream library.
+
+<hr>
+
 Port of [TweetNaCl](http://tweetnacl.cr.yp.to) / [NaCl](http://nacl.cr.yp.to/)
 to JavaScript for modern browsers and Node.js. Public domain.
 
