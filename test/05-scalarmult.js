@@ -1,11 +1,11 @@
-var nacl = (typeof window !== 'undefined') ? window.nacl : require('../' + (process.env.NACL_SRC || 'nacl.min.js'));
-nacl.util = require('tweetnacl-util');
-var test = require('tape');
+import nacl from '../nacl-fast.js';
+import naclUtil from 'tweetnacl-util';
+import test from 'tape';
 
-var randomVectors = require('./data/scalarmult.random');
+const randomVectors = require('./data/scalarmult.random');
 
-var enc = nacl.util.encodeBase64,
-    dec = nacl.util.decodeBase64;
+const enc = naclUtil.encodeBase64,
+    dec = naclUtil.decodeBase64;
 
 test('nacl.scalarMult.base', function(t) {
   // This takes takes a bit of time.

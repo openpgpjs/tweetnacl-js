@@ -2,19 +2,17 @@
   "name": "@openpgp/tweetnacl",
   "version": "1.0.4-0",
   "description": "Port of TweetNaCl cryptographic library to JavaScript",
+  "type": "module",
   "main": "nacl-fast.js",
   "types": "nacl.d.ts",
   "directories": {
     "test": "test"
   },
   "scripts": {
-    "build": "uglifyjs nacl.js -c -m -o nacl.min.js && uglifyjs nacl-fast.js -c -m -o nacl-fast.min.js",
-    "test-node": "tape test/*.js | faucet",
-    "test-node-all": "make -C test/c && tape test/*.js test/c/*.js | faucet",
-    "build-test-browser": "browserify test/browser/init.js test/*.js | uglifyjs -c -m -o test/browser/_bundle.js 2>/dev/null && browserify test/browser/init.js test/*.quick.js | uglifyjs -c -m -o test/browser/_bundle-quick.js 2>/dev/null",
-    "test": "npm run test-node-all",
+    "test-node": "tape-es test/*.js | faucet",
+    "test": "npm run test-node",
     "bench": "node test/benchmark/bench.js",
-    "lint": "eslint nacl.js nacl-fast.js test/*.js test/benchmark/*.js"
+    "lint": "eslint *.js test/*.js test/benchmark/*.js"
   },
   "repository": {
     "type": "git",
@@ -41,16 +39,16 @@
   },
   "homepage": "https://tweetnacl.js.org",
   "devDependencies": {
-    "browserify": "^16.2.3",
-    "eslint": "^6.8.0",
-    "faucet": "^0.0.1",
+    "eslint": "^8.51.0",
+    "faucet": "^0.0.4",
     "tap-browser-color": "^0.1.2",
-    "tape": "^4.13.0",
-    "tweetnacl-util": "^0.15.0",
-    "uglify-js": "^3.7.5"
+    "tape-es": "^1.2.17",
+    "tweetnacl-util": "^0.15.0"
   },
   "browser": {
+    "./crypto.js": "./cryptoBrowser.js",
     "buffer": false,
-    "crypto": false
+    "crypto": false,
+    "node:crypto": false
   }
 }

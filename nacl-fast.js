@@ -1,5 +1,8 @@
-(function(nacl) {
+import { crypto } from './crypto.js';
+
 'use strict';
+const nacl = {};
+export default nacl;
 
 // Ported in 2014 by Dmitry Chestnykh and Devi Mandiri.
 // Public domain.
@@ -1359,9 +1362,8 @@ nacl.setPRNG = function(fn) {
 (function() {
   // Initialize PRNG if environment provides CSPRNG.
   // If not, methods calling randombytes will throw.
-  var crypto = typeof self !== 'undefined' ? (self.crypto || self.msCrypto) : null;
   if (crypto && crypto.getRandomValues) {
-    // Browsers.
+    // Browsers and Node v16+
     var QUOTA = 65536;
     nacl.setPRNG(function(x, n) {
       var i, v = new Uint8Array(n);
@@ -1371,17 +1373,5 @@ nacl.setPRNG = function(fn) {
       for (i = 0; i < n; i++) x[i] = v[i];
       cleanup(v);
     });
-  } else if (typeof require !== 'undefined') {
-    // Node.js.
-    crypto = require('crypto');
-    if (crypto && crypto.randomBytes) {
-      nacl.setPRNG(function(x, n) {
-        var i, v = crypto.randomBytes(n);
-        for (i = 0; i < n; i++) x[i] = v[i];
-        cleanup(v);
-      });
-    }
   }
 })();
-
-})(typeof module !== 'undefined' && module.exports ? module.exports : (self.nacl = self.nacl || {}));

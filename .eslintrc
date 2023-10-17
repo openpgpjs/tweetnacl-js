@@ -1,8 +1,13 @@
 {
-  'env': {                           // http://eslint.org/docs/user-guide/configuring.html#specifying-environments
+  'parserOptions': {
+    'sourceType': 'module',
+    'ecmaVersion': 6
+  },
+  'env': {                      // http://eslint.org/docs/user-guide/configuring.html#specifying-environments
     'node': true,
     'browser': true,
-    'shared-node-browser': true
+    'shared-node-browser': true,
+    'es2020': true
   },
   'globals': {
     'Uint8Array': true,

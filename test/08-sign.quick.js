@@ -1,8 +1,7 @@
-var nacl = (typeof window !== 'undefined') ? window.nacl : require('../' + (process.env.NACL_SRC || 'nacl.min.js'));
-nacl.util = require('tweetnacl-util');
-var test = require('tape');
-
-var enc = nacl.util.encodeBase64;
+import nacl from '../nacl-fast.js';
+import naclUtil from 'tweetnacl-util';
+import test from 'tape';
+const enc = naclUtil.encodeBase64;
 
 test('nacl.sign.keyPair', function(t) {
   var keys = nacl.sign.keyPair();
