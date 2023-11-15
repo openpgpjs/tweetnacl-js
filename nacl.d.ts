@@ -16,13 +16,13 @@ declare namespace nacl {
         secretKey: Uint8Array;
     }
 
-    export interface secretbox {
-        (msg: Uint8Array, nonce: Uint8Array, key: Uint8Array): Uint8Array;
-        open(box: Uint8Array, nonce: Uint8Array, key: Uint8Array): Uint8Array | null;
-        readonly keyLength: number;
-        readonly nonceLength: number;
-        readonly overheadLength: number;
-    }
+    // export interface secretbox {
+    //     (msg: Uint8Array, nonce: Uint8Array, key: Uint8Array): Uint8Array;
+    //     open(box: Uint8Array, nonce: Uint8Array, key: Uint8Array): Uint8Array | null;
+    //     readonly keyLength: number;
+    //     readonly nonceLength: number;
+    //     readonly overheadLength: number;
+    // }
 
     export interface scalarMult {
         (n: Uint8Array, p: Uint8Array): Uint8Array;
@@ -32,10 +32,10 @@ declare namespace nacl {
     }
 
     namespace boxProps {
-        export interface open {
-            (msg: Uint8Array, nonce: Uint8Array, publicKey: Uint8Array, secretKey: Uint8Array): Uint8Array | null;
-            after(box: Uint8Array, nonce: Uint8Array, key: Uint8Array): Uint8Array | null;
-        }
+    //     export interface open {
+    //         (msg: Uint8Array, nonce: Uint8Array, publicKey: Uint8Array, secretKey: Uint8Array): Uint8Array | null;
+    //         after(box: Uint8Array, nonce: Uint8Array, key: Uint8Array): Uint8Array | null;
+    //     }
 
         export interface keyPair {
             (): BoxKeyPair;
@@ -44,16 +44,16 @@ declare namespace nacl {
     }
 
     export interface box {
-        (msg: Uint8Array, nonce: Uint8Array, publicKey: Uint8Array, secretKey: Uint8Array): Uint8Array;
-        before(publicKey: Uint8Array, secretKey: Uint8Array): Uint8Array;
-        after(msg: Uint8Array, nonce: Uint8Array, key: Uint8Array): Uint8Array;
-        open: boxProps.open;
+        // (msg: Uint8Array, nonce: Uint8Array, publicKey: Uint8Array, secretKey: Uint8Array): Uint8Array;
+        // before(publicKey: Uint8Array, secretKey: Uint8Array): Uint8Array;
+        // after(msg: Uint8Array, nonce: Uint8Array, key: Uint8Array): Uint8Array;
+        // open: boxProps.open;
         keyPair: boxProps.keyPair;
-        readonly publicKeyLength: number;
-        readonly secretKeyLength: number;
-        readonly sharedKeyLength: number;
-        readonly nonceLength: number;
-        readonly overheadLength: number;
+        // readonly publicKeyLength: number;
+        // readonly secretKeyLength: number;
+        // readonly sharedKeyLength: number;
+        // readonly nonceLength: number;
+        // readonly overheadLength: number;
     }
 
     namespace signProps {
@@ -80,19 +80,19 @@ declare namespace nacl {
         readonly signatureLength: number;
     }
 
-    export interface hash {
-        (msg: Uint8Array): Uint8Array;
-        readonly hashLength: number;
-    }
+    // export interface hash {
+    //     (msg: Uint8Array): Uint8Array;
+    //     readonly hashLength: number;
+    // }
 }
 
 declare interface nacl {
-    randomBytes(n: number): Uint8Array;
-    secretbox: nacl.secretbox;
+    // randomBytes(n: number): Uint8Array;
+    // secretbox: nacl.secretbox;
     scalarMult: nacl.scalarMult;
     box: nacl.box;
     sign: nacl.sign;
-    hash: nacl.hash;
-    verify(x: Uint8Array, y: Uint8Array): boolean;
-    setPRNG(fn: (x: Uint8Array, n: number) => void): void;
+    // hash: nacl.hash;
+    // verify(x: Uint8Array, y: Uint8Array): boolean;
+    // setPRNG(fn: (x: Uint8Array, n: number) => void): void;
 }
