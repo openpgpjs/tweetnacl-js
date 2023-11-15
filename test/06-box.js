@@ -2,7 +2,7 @@ import nacl from '../nacl-fast.js';
 import naclUtil from 'tweetnacl-util';
 import test from 'tape';
 
-const randomVectors = require('./data/box.random');
+import randomVectors from './data/box.random.js';
 
 const enc = naclUtil.encodeBase64,
     dec = naclUtil.decodeBase64;

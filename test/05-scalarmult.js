@@ -2,12 +2,13 @@ import nacl from '../nacl-fast.js';
 import naclUtil from 'tweetnacl-util';
 import test from 'tape';
 
-const randomVectors = require('./data/scalarmult.random');
+import randomVectors from './data/scalarmult.random.js';
 
 const enc = naclUtil.encodeBase64,
     dec = naclUtil.decodeBase64;
 
-test('nacl.scalarMult.base', function(t) {
+// nacl.scalarMult.base not exposed
+test('nacl.scalarMult.base', {skip: true}, function(t) {
   // This takes takes a bit of time.
   // Similar to https://code.google.com/p/go/source/browse/curve25519/curve25519_test.go?repo=crypto
   var golden = new Uint8Array([0x89, 0x16, 0x1f, 0xde, 0x88, 0x7b, 0x2b, 0x53, 0xde, 0x54,
@@ -30,10 +31,10 @@ test('nacl.scalarMult and nacl.scalarMult.base random test vectors', function(t)
     var sk2 = dec(vec[3]);
     var out = dec(vec[4]);
 
-    var jpk1 = nacl.scalarMult.base(sk1);
-    t.equal(enc(jpk1), enc(pk1));
-    var jpk2 = nacl.scalarMult.base(sk2);
-    t.equal(enc(jpk2), enc(pk2));
+    // var jpk1 = nacl.scalarMult.base(sk1);
+    // t.equal(enc(jpk1), enc(pk1));
+    // var jpk2 = nacl.scalarMult.base(sk2);
+    // t.equal(enc(jpk2), enc(pk2));
     var jout1 = nacl.scalarMult(sk1, pk2);
     t.equal(enc(jout1), enc(out));
     var jout2 = nacl.scalarMult(sk2, pk1);

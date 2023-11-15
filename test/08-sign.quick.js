@@ -1,12 +1,18 @@
 import nacl from '../nacl-fast.js';
 import naclUtil from 'tweetnacl-util';
 import test from 'tape';
+import { crypto } from '../crypto.js';
 const enc = naclUtil.encodeBase64;
+
+const seedLength = 32;
+const secretKeyLength = 64;
+const publicKeyLength = 32;
+const signatureLength = 64;
 
 test('nacl.sign.keyPair', function(t) {
   var keys = nacl.sign.keyPair();
-  t.ok(keys.secretKey && keys.secretKey.length === nacl.sign.secretKeyLength, 'has secret key');
-  t.ok(keys.publicKey && keys.publicKey.length === nacl.sign.publicKeyLength, 'has public key');
+  t.ok(keys.secretKey && keys.secretKey.length === 64, 'has secret key');
+  t.ok(keys.publicKey && keys.publicKey.length === 32, 'has public key');
   t.notEqual(enc(keys.secretKey), enc(keys.publicKey));
   var newKeys = nacl.sign.keyPair();
   t.notEqual(enc(newKeys.secretKey), enc(keys.secretKey), 'two keys differ');
@@ -22,26 +28,27 @@ test('nacl.sign.keyPair.fromSecretKey', function(t) {
 });
 
 test('nacl.sign.keyPair.fromSeed', function(t) {
-  var seed = nacl.randomBytes(nacl.sign.seedLength);
+  var seed = crypto.getRandomValues(new Uint8Array(seedLength));
   var k1 = nacl.sign.keyPair.fromSeed(seed);
   var k2 = nacl.sign.keyPair.fromSeed(seed);
-  t.equal(k1.secretKey.length, nacl.sign.secretKeyLength);
-  t.equal(k1.publicKey.length, nacl.sign.publicKeyLength);
-  t.equal(k2.secretKey.length, nacl.sign.secretKeyLength);
-  t.equal(k2.publicKey.length, nacl.sign.publicKeyLength);
+  t.equal(k1.secretKey.length, secretKeyLength);
+  t.equal(k1.publicKey.length, publicKeyLength);
+  t.equal(k2.secretKey.length, secretKeyLength);
+  t.equal(k2.publicKey.length, publicKeyLength);
   t.equal(enc(k2.secretKey), enc(k1.secretKey));
   t.equal(enc(k2.publicKey), enc(k1.publicKey));
-  var seed2 = nacl.randomBytes(nacl.sign.seedLength);
+  var seed2 = crypto.getRandomValues(new Uint8Array(seedLength));
   var k3 = nacl.sign.keyPair.fromSeed(seed2);
-  t.equal(k3.secretKey.length, nacl.sign.secretKeyLength);
-  t.equal(k3.publicKey.length, nacl.sign.publicKeyLength);
+  t.equal(k3.secretKey.length, secretKeyLength);
+  t.equal(k3.publicKey.length, publicKeyLength);
   t.notEqual(enc(k3.secretKey), enc(k1.secretKey));
   t.notEqual(enc(k3.publicKey), enc(k1.publicKey));
   t.throws(function() { nacl.sign.keyPair.fromSeed(seed2.subarray(0, 16)); }, Error, 'should throw error for wrong seed size');
   t.end();
 });
 
-test('nacl.sign and nacl.sign.open', function(t) {
+// nacl.sign.open not exposed
+test('nacl.sign and nacl.sign.open', {skip: true}, function(t) {
   var k = nacl.sign.keyPair();
   var m = new Uint8Array(100);
   var i;
@@ -66,7 +73,7 @@ test('nacl.sign.detached and nacl.sign.detached.verify', function(t) {
   var i;
   for (i = 0; i < m.length; i++) m[i] = i & 0xff;
   var sig = nacl.sign.detached(m, k.secretKey);
-  t.ok(sig.length === nacl.sign.signatureLength, 'signature must have correct length');
+  t.ok(sig.length === signatureLength, 'signature must have correct length');
   var result = nacl.sign.detached.verify(m, sig, k.publicKey);
   t.ok(result, 'signature must be verified');
   t.throws(function() { nacl.sign.detached.verify(m, sig, k.publicKey.subarray(1)); }, Error, 'throws error for wrong public key size');

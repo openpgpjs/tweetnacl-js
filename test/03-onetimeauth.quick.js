@@ -2,7 +2,7 @@ import nacl from '../nacl-fast.js';
 import naclUtil from 'tweetnacl-util';
 import test from 'tape';
 
-const specVectors = require('./data/onetimeauth.spec');
+import specVectors from './data/onetimeauth.spec.js';
 
 var enc = naclUtil.encodeBase64;
 

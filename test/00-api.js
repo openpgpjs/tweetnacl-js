@@ -19,7 +19,7 @@ test('input type check', function(t) {
   t.throws(function() { nacl.scalarMult(arr, key); }, TypeError);
   t.throws(function() { nacl.scalarMult(key, arr); }, TypeError);
 
-  t.throws(function() { nacl.scalarMult.base(arr); }, TypeError);
+  // t.throws(function() { nacl.scalarMult.base(arr); }, TypeError);
 
   // t.throws(function() { nacl.box(arr, nonce, key, key); }, TypeError);
   // t.throws(function() { nacl.box(msg, arr, key, key); }, TypeError);

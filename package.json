@@ -9,7 +9,7 @@
     "test": "test"
   },
   "scripts": {
-    "test-node": "tape-es test/*.js | faucet",
+    "test-node": "tape-es 'test/*.js' -t 1 | tap-summary",
     "test": "npm run test-node",
     "bench": "node test/benchmark/bench.js",
     "lint": "eslint *.js test/*.js test/benchmark/*.js"
@@ -40,8 +40,8 @@
   "homepage": "https://tweetnacl.js.org",
   "devDependencies": {
     "eslint": "^8.51.0",
-    "faucet": "^0.0.4",
     "tap-browser-color": "^0.1.2",
+    "tap-summary": "^4.0.0",
     "tape-es": "^1.2.17",
     "tweetnacl-util": "^0.15.0"
   },
